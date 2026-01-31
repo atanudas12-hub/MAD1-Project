@@ -1,0 +1,63 @@
+<!-- ============================================ -->
+<!-- FILE: templates/admin/manage_students.html -->
+<!-- ============================================ -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Manage Students</h2>
+    </div>
+
+    <form method="GET" style="margin-bottom: 1.5rem;">
+        <div style="display: flex; gap: 1rem;">
+            <input type="text" name="search" placeholder="Search by name, roll number, or email..."
+                value="{{ request.args.get('search', '') }}"
+                style="flex: 1; padding: 0.75rem; border: 1px solid #bdc3c7; border-radius: 4px;">
+            <button type="submit" class="btn btn-primary">Search</button>
+        </div>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Roll Number</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>CGPA</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <td>{{ student.roll_number }}</td>
+                <td>{{ student.name }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.department }}</td>
+                <td>{{ student.cgpa }}</td>
+                <td>
+                    {% if student.is_blacklisted %}
+                    <span class="badge badge-danger">Blacklisted</span>
+                    {% else %}
+                    <span class="badge badge-success">Active</span>
+                    {% endif %}
+                </td>
+                <td>
+                    <a href="{{ url_for('blacklist_student', id=student.id) }}"
+                        class="btn {% if student.is_blacklisted %}btn-success{% else %}btn-warning{% endif %}"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">
+                        {% if student.is_blacklisted %}Unblock{% else %}Blacklist{% endif %}
+                    </a>
+                    <a href="{{ url_for('delete_student', id=student.id) }}" class="btn btn-danger"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.85rem;"
+                        onclick="return confirm('Are you sure?')">Delete</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

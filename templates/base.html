@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Placement Portal{% endblock %} | IIT Madras</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    {% block extra_css %}{% endblock %}
+</head>
+
+<body class="{% block body_class %}default-page{% endblock %}">
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-icon">🎓</span>
+                <div class="brand-text">
+                    <h1>IIT Madras</h1>
+                    <p class="brand-subtitle">Placement Portal</p>
+                </div>
+            </div>
+
+            <ul class="nav-menu">
+                {% if session.role %}
+                <!-- Admin Navigation -->
+                {% if session.role == 'admin' %}
+                <li><a href="{{ url_for('admin_dashboard') }}" class="nav-link">
+                        <span class="nav-icon">📊</span> Dashboard
+                    </a></li>
+                <li><a href="{{ url_for('admin_manage_companies') }}" class="nav-link">
+                        <span class="nav-icon">🏢</span> Companies
+                    </a></li>
+                <li><a href="{{ url_for('admin_manage_students') }}" class="nav-link">
+                        <span class="nav-icon">👨‍🎓</span> Students
+                    </a></li>
+                <li><a href="{{ url_for('admin_manage_drives') }}" class="nav-link">
+                        <span class="nav-icon">📋</span> Drives
+                    </a></li>
+                <li><a href="{{ url_for('admin_view_applications') }}" class="nav-link">
+                        <span class="nav-icon">📄</span> Applications
+                    </a></li>
+
+                <!-- Company Navigation -->
+                {% elif session.role == 'company' %}
+                <li><a href="{{ url_for('company_dashboard') }}" class="nav-link">
+                        <span class="nav-icon">📊</span> Dashboard
+                    </a></li>
+                <li><a href="{{ url_for('create_drive') }}" class="nav-link">
+                        <span class="nav-icon">➕</span> Create Drive
+                    </a></li>
+                <li><a href="{{ url_for('company_view_drives') }}" class="nav-link">
+                        <span class="nav-icon">📋</span> My Drives
+                    </a></li>
+
+                <!-- Student Navigation -->
+                {% elif session.role == 'student' %}
+                <li><a href="{{ url_for('student_dashboard') }}" class="nav-link">
+                        <span class="nav-icon">📊</span> Dashboard
+                    </a></li>
+                <li><a href="{{ url_for('student_view_drives') }}" class="nav-link">
+                        <span class="nav-icon">🔍</span> Browse Drives
+                    </a></li>
+                <li><a href="{{ url_for('student_applications') }}" class="nav-link">
+                        <span class="nav-icon">📄</span> My Applications
+                    </a></li>
+                <li><a href="{{ url_for('student_profile') }}" class="nav-link">
+                        <span class="nav-icon">👤</span> Profile
+                    </a></li>
+                {% endif %}
+
+                <!-- Logout Button -->
+                <li><a href="{{ url_for('logout') }}" class="nav-link nav-logout">
+                        <span class="nav-icon">🚪</span> Logout
+                    </a></li>
+                {% else %}
+                <!-- Public Navigation -->
+                <li><a href="{{ url_for('index') }}" class="nav-link">
+                        <span class="nav-icon">🏠</span> Home
+                    </a></li>
+                <li><a href="{{ url_for('login') }}" class="nav-link nav-login">
+                        <span class="nav-icon">🔑</span> Login
+                    </a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Main Content Container -->
+    <div class="main-container">
+        <!-- Flash Messages -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flash-messages">
+            {% for category, message in messages %}
+            <div class="alert alert-{{ category }}">
+                <span class="alert-icon">
+                    {% if category == 'success' %}✓
+                    {% elif category == 'error' %}✗
+                    {% elif category == 'warning' %}⚠
+                    {% else %}ℹ{% endif %}
+                </span>
+                <span class="alert-message">{{ message }}</span>
+                <button class="alert-close" onclick="this.parentElement.style.display='none'">×</button>
+            </div>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <!-- Page Content -->
+        <div class="content-wrapper">
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <h4>IIT Madras Placement Portal</h4>
+                <p>Connecting students with career opportunities</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    {% if session.role %}
+                    {% if session.role == 'admin' %}
+                    <li><a href="{{ url_for('admin_dashboard') }}">Dashboard</a></li>
+                    {% elif session.role == 'company' %}
+                    <li><a href="{{ url_for('company_dashboard') }}">Dashboard</a></li>
+                    {% elif session.role == 'student' %}
+                    <li><a href="{{ url_for('student_dashboard') }}">Dashboard</a></li>
+                    {% endif %}
+                    {% else %}
+                    <li><a href="{{ url_for('login') }}">Login</a></li>
+                    <li><a href="{{ url_for('register_student') }}">Register as Student</a></li>
+                    <li><a href="{{ url_for('register_company') }}">Register as Company</a></li>
+                    {% endif %}
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p>Email: placements@iitm.ac.in</p>
+                <p>Phone: +91-44-2257-XXXX</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Indian Institute of Technology Madras. All rights reserved.</p>
+            <p class="footer-credits">MAD1 Project | {% if session.role %}Logged in as: <strong>{{ session.role|title
+                    }}</strong>{% endif %}</p>
+        </div>
+    </footer>
+
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!-- ============================================ -->
+<!-- FILE: templates/student/application_history.html -->
+<!-- ============================================ -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>My Application History</h2>
+    </div>
+
+    {% if applications %}
+    <table>
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Applied On</th>
+                <th>Deadline</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.drive.company.company_name }}</td>
+                <td>{{ app.drive.job_title }}</td>
+                <td>{{ app.application_date.strftime('%Y-%m-%d %H:%M') }}</td>
+                <td>{{ app.drive.application_deadline }}</td>
+                <td>
+                    {% if app.status == 'Selected' %}
+                    <span class="badge badge-success">✓ Selected</span>
+                    {% elif app.status == 'Shortlisted' %}
+                    <span class="badge badge-info">⭐ Shortlisted</span>
+                    {% elif app.status == 'Rejected' %}
+                    <span class="badge badge-danger">✗ Rejected</span>
+                    {% else %}
+                    <span class="badge badge-warning">⏳ Applied</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p style="text-align: center; color: #888; padding: 2rem;">No applications yet. Start applying to placement drives!
+    </p>
+    <div style="text-align: center;">
+        <a href="{{ url_for('student_view_drives') }}" class="btn btn-primary">Browse Drives</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

@@ -1,0 +1,58 @@
+<!-- ============================================ -->
+<!-- FILE: templates/company/dashboard.html -->
+<!-- ============================================ -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Company Dashboard - {{ company.company_name }}</h2>
+    </div>
+
+    <div
+        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+        <div style="background: #3498db; color: white; padding: 1.5rem; border-radius: 8px; text-align: center;">
+            <h3 style="font-size: 2rem; margin-bottom: 0.5rem;">{{ drive_stats|length }}</h3>
+            <p>Total Drives</p>
+        </div>
+    </div>
+
+    <h3 style="margin-top: 2rem; margin-bottom: 1rem;">Your Placement Drives</h3>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Job Title</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Applicants</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for stat in drive_stats %}
+            <tr>
+                <td>{{ stat.drive.job_title }}</td>
+                <td>{{ stat.drive.application_deadline }}</td>
+                <td>
+                    {% if stat.drive.status == 'Approved' %}
+                    <span class="badge badge-success">Approved</span>
+                    {% elif stat.drive.status == 'Rejected' %}
+                    <span class="badge badge-danger">Rejected</span>
+                    {% elif stat.drive.status == 'Closed' %}
+                    <span class="badge badge-info">Closed</span>
+                    {% else %}
+                    <span class="badge badge-warning">Pending</span>
+                    {% endif %}
+                </td>
+                <td>{{ stat.applicants }}</td>
+                <td>
+                    <a href="{{ url_for('company_view_applications', id=stat.drive.id) }}" class="btn btn-primary"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">View Applications</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

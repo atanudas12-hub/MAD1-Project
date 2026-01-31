@@ -1,0 +1,47 @@
+<!-- ============================================ -->
+<!-- FILE: templates/admin/view_applications.html -->
+<!-- ============================================ -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>All Applications</h2>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Student</th>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Applied On</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for app in applications %}
+            <tr>
+                <td>{{ app.id }}</td>
+                <td>{{ app.student.name }} ({{ app.student.roll_number }})</td>
+                <td>{{ app.drive.company.company_name }}</td>
+                <td>{{ app.drive.job_title }}</td>
+                <td>{{ app.application_date.strftime('%Y-%m-%d') }}</td>
+                <td>
+                    {% if app.status == 'Selected' %}
+                    <span class="badge badge-success">Selected</span>
+                    {% elif app.status == 'Shortlisted' %}
+                    <span class="badge badge-info">Shortlisted</span>
+                    {% elif app.status == 'Rejected' %}
+                    <span class="badge badge-danger">Rejected</span>
+                    {% else %}
+                    <span class="badge badge-warning">Applied</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
