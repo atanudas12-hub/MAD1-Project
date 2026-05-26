@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card-header">
+    <h2><b>Admin Dashboard</b></h2>
+</div>
+<div class="dashboard-grid">
+    <div class="stat-card">
+        <h3>{{ total_students }}</h3>
+        <p>Total Students</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ total_companies }}</h3>
+        <p>Total Companies</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ total_drives }}</h3>
+        <p>Total Drives</p>
+    </div>
+    <div class="stat-card">
+        <h3>{{ total_applications }}</h3>
+        <p>Total Applications</p>
+    </div>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit,minmax(300px,1fr));gap: 1.5rem;">
+    <div class="card">
+        <h3 style="color: #f39c12;">⏳ Pending Approvals</h3>
+        <p style="font-size: 2rem;margin: 1rem 0;">{{ pending_companies }}</p>
+        <p>Companies awaiting approval</p>
+        <a href="{{ url_for('admin_manage_companies') }}" class="btn btn-warning"
+            style="margin-top: 1rem;">Review Companies</a>
+    </div>
+
+     <div class="card">
+        <h3 style="color: #3498db;">📋 Pending Drives</h3>
+        <p style="font-size: 2rem;margin: 1rem 0;">{{ pending_drives }}</p>
+        <p>Placement drives awaiting approval</p>
+        <a href="{{ url_for('admin_manage_drives') }}" class="btn btn-primary"
+            style="margin-top: 1rem;">Review Drives</a>
+    </div>
+
+</div>
+<br>
+{% endblock %}

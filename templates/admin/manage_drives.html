@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Manage Placement Drives</h2>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Company</th>
+                <th>Job Title</th>
+                <th>Cgpa Req.</th>
+                <th>Deadline</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for drive in drives %}
+            <tr>
+                <td>{{ drive.id }}</td>
+                <td>{{ drive.company.company_name }}</td>
+                <td>{{ drive.job_title }}</td>
+                <td>{{ drive.required_cgpa }}</td>
+                <td>{{ drive.application_deadline }}</td>
+                <td>
+                    {% if drive.status == 'Approved' %}
+                    <span class="badge badge-success">Approved</span> 
+                    {% elif drive.status == 'Rejected' %}
+                    <span class="badge badge-info">Rejected</span>
+                    {% elif drive.status == 'Closed' %}
+                    <span class="badge badge-danger">Closed</span>
+                    {% else %}
+                    <span class="badge badge-warning">Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if drive.status == 'Pending' %}
+                    <a href="{{ url_for('approve_drive',id=drive.id) }}" class="btn btn-success"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Approve</a>
+                    <a href="{{ url_for('reject_drive',id=drive.id) }}" class="btn btn-danger"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.85rem;">Reject</a>
+                    {% else %}
+                    <a href="{{ url_for('admin_delete_drive', id=drive.id) }}" class="btn btn-danger"
+                        style="padding: 0.4rem 0.8rem ;font-size: 0.85rem;">Delete</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

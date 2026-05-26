@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <div class="card-header">
+        <h2>Available Placement Drives</h2>
+    </div>
+
+    {% if drives %}
+    {% for drive in drives %}
+
+    <div class="card" style="margin-bottom: 1.5rem; border-left: 4px solid #3498db;">
+        <h3 style="color: #2c3e50; margin-bottom: 0.5rem;">{{ drive.job_title }}</h3>
+        <p style="color: #7f8c8d; margin-bottom: 1rem;"><strong>{{ drive.company.company_name }}</strong></p>
+
+        <div style="margin-top: 1rem;">
+            <p><strong>Description:</strong> {{ drive.job_description }}</p>
+            {% if drive.eligibility_criteria %}
+            <p><strong>Eligibility: </strong> {{ drive.eligibility_criteria }}</p>
+            {% endif %}
+            <p><strong>Required CGPA: </strong> {{ drive.required_cgpa }}</p>
+            {% if drive.salary_package %}
+            <p><strong>Salary Package: </strong> {{ drive.salary_package }}</p>
+            {% endif %}
+        </div>
+        {% if drive.id in applied_drive_ids %}
+        <span class="badge badge-success">Already Applied</span>
+        {% else %}
+        <a href="{{ url_for('apply_drive', id=drive.id) }}" class="btn btn-primary">Apply Now !
+
+        </a>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+    {% else %}
+    <p style="text-align: center; color: #888; padding: 2rem;">No Placement drives Available at the moment.</p>
+    {% endif %}
+</div>
+{% endblock %}

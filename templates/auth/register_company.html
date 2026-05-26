@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width: 500px; margin: 2rem auto;">
+    <div class="card-header">
+        <h2>Company Registration</h2>
+    </div>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="company_name">Company Name:</label>
+            <input type="text" name="company_name" id="company_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="email">Company Email:</label>
+            <input type="email" name="email" id="email" required>
+        </div>
+
+        <div class="form-group">
+            <label for="hr_name">HR Name:</label>
+            <input type="text" name="hr_name" id="hr_name" required>
+        </div>
+
+        <div class="form-group">
+            <label for="hr_contact">HR Contact Number:</label>
+            <input type="text" name="hr_contact" id="hr_contact" required>
+        </div>
+
+        <div class="form-group">
+            <label for="website">Company Website:</label>
+            <input type="url" name="website" id="website" required>
+        </div>
+
+        <div class="form-group">
+            <label for="description">Company Description:</label>
+            <input name="description" id="description" required>
+        </div>
+
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" name="password" id="password" required>
+        </div>
+        <br>
+        <button type="submit" class="btn btn-primary" style="width: 100%;">Register</button>
+    </form>
+    <p style="margin-top: 1.5rem; text-align: center; color: #888;">
+        NOTE: Your account will be activated after admin approval.
+    </p>
+    <p style="margin-top: 0.5rem; text-align: center;">
+        Already have an account? <a href="{{ url_for('login') }}">Login here</a>
+    </p>
+</div>
+{% endblock %}

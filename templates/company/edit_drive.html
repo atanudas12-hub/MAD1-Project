@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card" style="max-width: 800px; margin: 2rem auto;">
+    <div class="card-header">
+        <h2>Edit Placement Drive</h2>
+    </div>
+
+    <form method="post">
+        <div class="form-group">
+            <label for="job_title">Job Title:</label>
+            <input type="text" name="job_title" id="job_title"  value="{{ drive.job_title }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="job_description">Job Description:</label>
+            <textarea name="job_description" id="job_description"  rows="5" required>
+                {{ drive.job_description }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="hr_name">Eligibility Criteria:</label>
+            <textarea name="eligibility_criteria" id="eligibility_criteria"
+                rows="3" required>{{ drive.eligibility_criteria }}</textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="required">Required CGPA:</label>
+            <input type="number" step="0.01" name="required_cgpa" id="required_cgpa"  value="{{ drive.required_cgpa }}"
+                min="0" max="10" required>
+        </div>
+
+        <div class="form-group">
+            <label for="salary_package">Salary Package:</label>
+            <input type="text" name="salary_package" id="salary_package" value="{{ drive.salary_package or '' }}" required>
+        </div>
+
+        <div class="form-group">
+            <label for="application_deadline">Application Deadline:</label>
+            <input name="application_deadline" id="application_deadline" 
+                value="{{ drive.application_deadline}}" required>
+        </div>
+        <br>
+
+        <div style="display: flex; gap: 1rem;">
+            <button type="submit" class="btn btn-primary" style="flex: 1;">Update Drive</button>
+            <a href="{{ url_for('company_view_drives') }}" class="btn btn-danger"
+                style="flex:1; text-align: center;">Cancel</a>
+        </div>
+    </form>
+    <p style="margin-top: 1rem; font-size: 0.9rem; color: #888;">
+        NOTE: Editing a drive will reset its status to "Pending" and require admin re-approval.
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block body_class %}home-page{% endblock %}
+
+{% block content %}
+<div style="background-image: url(static/uploads/images/img1.png); background-size: cover; background-position: center; background-attachment: fixed;">    
+
+    <div class="home-hero-card">
+        <br>
+        <br>
+        <br>
+        <h1>Welcome to AD University</h1><h1 style="color: brown;"> Placement Portal</h1>
+        <p >Your gateway to exciting career opportunities!</p>
+        <br>
+        
+        <div class="hero-buttons">
+            <a href="{{ url_for('login') }}" class="btn btn-primary" style="min-width: 150px;">Join Us</a>
+            <a href="{{ url_for('about') }}" class="btn btn-success" style="min-width: 150px;">Know About Us</a>
+        </div>
+    </div>
+    <br>
+    <br>
+    <!--feature cards-->
+    <div class="home-features">
+        <div class="card feature-card">
+            <h3 class="company">🧑‍💼 For Companies</h3>
+            <p>Post job openings, manage applications, and connect with top talent.</p>
+        </div>
+        <div class="card feature-card">
+            <h3 class="student">🎓 For Students</h3>
+            <p>Search for jobs, apply to positions, and track your applications.</p>
+        </div>
+        <div class="card feature-card">
+            <h3 class="admin">🔧 For Admin</h3>
+            <p>Manage users, monitor system activity, and oversee all operations.</p>
+        </div>
+    </div>
+    <br>
+    <br>
+    <!-- review cards-->
+    <section class="companies-section">
+        <div class="companies">
+            <br>
+            <h2 class="companies-title">
+                     Partners & Prominent Recruiters
+            </h2>
+            <br>
+            <div class="logo-grid">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/google.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/paypal.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/phonepe.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/re.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/sbi.png') }}" alt="Companies">      
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/wipro.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/tcs.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/isro.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/hdfc.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/drdo.png') }}" alt="Companies">      
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/info.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/bajaj.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/phonepe.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/google.png') }}" alt="Companies">
+                <img src="{{ url_for('static' , filename='uploads/images/companies logo/hdfc.png') }}" alt="Companies">             
+            </div>
+        <br><br>
+        </div>
+    </section>
+</div>
+{% endblock %}
